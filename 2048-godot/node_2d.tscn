@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://drliccaue7rsu"]
+[gd_scene load_steps=5 format=3 uid="uid://drliccaue7rsu"]
 
 [ext_resource type="Script" uid="uid://cnclycdugf7fk" path="res://node_2d.gd" id="1_wtcfe"]
 [ext_resource type="Script" uid="uid://c3jky3effp336" path="res://score.gd" id="2_epypp"]
 [ext_resource type="Texture2D" uid="uid://b8so87nup76ig" path="res://assets/score.png" id="3_0hol4"]
 [ext_resource type="Script" uid="uid://bw5uoisciu6i3" path="res://home_screen_ui.gd" id="4_kdubu"]
-[ext_resource type="Texture2D" uid="uid://36og742i13pc" path="res://assets/play/play_not_pressed.png" id="5_d21ai"]
-[ext_resource type="Texture2D" uid="uid://ex4t8kgkdhfw" path="res://assets/play/play_pressed.png" id="6_rj586"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_wtcfe")
@@ -126,6 +124,7 @@ expand_mode = 1
 script = ExtResource("2_epypp")
 
 [node name="Score_texture_rect" type="TextureRect" parent="score"]
+z_index = 10
 offset_left = 9.0
 offset_top = -11.0
 offset_right = 125.04947
@@ -134,6 +133,7 @@ texture = ExtResource("3_0hol4")
 expand_mode = 1
 
 [node name="GridContainer" type="GridContainer" parent="score"]
+z_index = 10
 custom_minimum_size = Vector2(3, 3)
 offset_left = 143.0
 offset_top = 21.0
@@ -172,11 +172,23 @@ expand_mode = 1
 script = ExtResource("4_kdubu")
 
 [node name="TextureButton" type="TextureButton" parent="."]
-offset_left = 479.0
-offset_top = 116.0
-offset_right = 913.0
-offset_bottom = 531.0
+offset_left = 428.0
+offset_top = 141.0
+offset_right = 742.7807
+offset_bottom = 442.0
 toggle_mode = true
-texture_normal = ExtResource("5_d21ai")
-texture_pressed = ExtResource("6_rj586")
 stretch_mode = 0
+
+[node name="TextureButton2" type="TextureButton" parent="."]
+offset_left = 883.0
+offset_top = 17.0
+offset_right = 1139.3
+offset_bottom = 188.0
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="."]
+offset_right = 1166.0
+offset_bottom = 665.0
+expand_mode = 1
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="TextureButton2" to="." method="_on_texture_button_2_pressed"]

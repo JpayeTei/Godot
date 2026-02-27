@@ -1,5 +1,13 @@
 extends Node2D
 var score_value_in_node:int = 0
+var quit_pressed = false
+var score = load("res://score.gd")
+@onready var home = get_node("home_screen_ui")
+@onready var play_button = $TextureButton
+@onready var quit_button = $TextureButton2
+@onready var score_texture = $score/Score_texture_rect
+var game_started = false
+var background_texture = preload("res://assets/background.jpg")
 var tile_textures = {
 	0:    preload("res://assets/0.png"),
 	2:    preload("res://assets/2.png"),
@@ -14,42 +22,47 @@ var tile_textures = {
 	1024: preload("res://assets/1024.png"),
 	2048: preload("res://assets/2048.png"),
 }
-
 var table = {}
 var row = 4
 var column = 4
 
+
 func _ready() -> void:
+	score_texture.visible = false
+	play_button.move_to_front()
+	quit_button.move_to_front()
+	score.update_score()
+	background()
 	initialize_table()
-	display_table()
-	randomizer()
-	display_table()
-	update_ui()
-	$score.update_score()
+	home.home_screen()
+
 func _input(event):
-	if (event.is_action_pressed("click")==false):
-		update_ui()
-	if (gameover() == false):
-		if(event.is_action_pressed("a")):
-			a()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-			randomizer()
-			update_ui()
 
-		if(event.is_action_pressed("d")):
-			d()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-			randomizer()
-			update_ui()
+	if game_started:
+		quit()
+		if (gameover() == false && quit_pressed == false):
+			if(event.is_action_pressed("a")):
+				a()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+				randomizer()
+				update_ui()
 
-		if(event.is_action_pressed("s")):
-			s()
-			randomizer()
-			update_ui()
+			if(event.is_action_pressed("d")):
+				d()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+				randomizer()
+				update_ui()
 
-		if(event.is_action_pressed("w")):
-			w()
-			randomizer()
-			update_ui()
-		$score.update_score()
+			if(event.is_action_pressed("s")):
+				s()
+				randomizer()
+				update_ui()
+
+			if(event.is_action_pressed("w")):
+				w()
+				randomizer()
+				update_ui()
+			$score.update_score()
+		else:
+			$GridContainer.visible = false
 
 func initialize_table() -> void:
 	for i in range(0, row):
@@ -94,6 +107,7 @@ func a():
 
 					table[Vector2(i, j)] = table[Vector2(i, j)] + table[Vector2(i, k)]
 					table[Vector2(i, k)] = 0
+					k+=1
 				else:
 					break
 func d():
@@ -108,6 +122,7 @@ func d():
 						score_value_in_node += (table[Vector2(i,j)])
 					table[Vector2(i, j)] = table[Vector2(i, j)] + table[Vector2(i, k)]
 					table[Vector2(i, k)] = 0
+					k-=1
 				else:
 					break
 func s():
@@ -122,7 +137,7 @@ func s():
 						score_value_in_node += (table[Vector2(i,j)])
 					table[Vector2(i, j)] = table[Vector2(i, j)] + table[Vector2(k, j)]
 					table[Vector2(k, j)] = 0
-
+					k-=1
 				else:
 					break
 func w():
@@ -137,7 +152,7 @@ func w():
 						score_value_in_node += (table[Vector2(i,j)])
 					table[Vector2(i, j)] = table[Vector2(i, j)] + table[Vector2(k, j)]
 					table[Vector2(k, j)] = 0
-
+					k+=1
 				else:
 					break
 
@@ -164,6 +179,7 @@ func gameover():
 	
 func update_ui() -> void:
 	var grid = $GridContainer
+	grid.move_to_front()
 	for i in range(row):
 		for j in range(column):
 			var index = i * column + j
@@ -179,3 +195,25 @@ func board_full_check():
 			if table[Vector2(i, j)] == 0:
 				return false
 	return true
+
+func quit():
+	quit_button.ignore_texture_size = true
+	quit_button.stretch_mode = TextureButton.STRETCH_SCALE
+	quit_button.texture_normal = load("res://assets/quit/quit_not_pressed.png")
+	quit_button.texture_pressed = load("res://assets/quit/quit_pressed.png")
+
+func _on_texture_button_2_pressed():
+	quit_pressed = true
+	play_button.visible = true
+	quit_button.visible = false
+	home.home_screen()
+func _on_texture_button_pressed():
+	game_started = true
+	play_button.visible = false
+	quit_button.visible = true
+	randomizer()
+	update_ui()
+
+func background():
+	var Background_Texture = $BackgroundTextureRect
+	Background_Texture.texture = background_texture
