@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://brhry53dv61hr"]
+[gd_scene load_steps=3 format=3 uid="uid://cruxlsh1lwm83"]
 
-[ext_resource type="Script" uid="uid://crpf0rrd5h1lj" path="res://script/ui/base_window.gd" id="1_1pceh"]
+[ext_resource type="Script" uid="uid://c1o4re3qtyalb" path="res://scenes/ui/hero_picker.gd" id="1_ah3fn"]
+[ext_resource type="PackedScene" uid="uid://ycr711pko7nw" path="res://scenes/ui/hero_slot.tscn" id="2_ah3fn"]
 
 [node name="TestWindow" type="Panel"]
 anchors_preset = -1
@@ -14,8 +15,7 @@ offset_right = 0.3199463
 offset_bottom = -0.12005615
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_1pceh")
-window_id = "hero_picker"
+script = ExtResource("1_ah3fn")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -45,13 +45,34 @@ text = "X"
 
 [node name="Content" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="SlotsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -68.0
+offset_right = 75.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ConfirmButton" type="Button" parent="MarginContainer/VBoxContainer/Content"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="HeroSlot" parent="MarginContainer/VBoxContainer/Content/SlotsContainer" instance=ExtResource("2_ah3fn")]
+layout_mode = 2
+
+[node name="HeroSlot2" parent="MarginContainer/VBoxContainer/Content/SlotsContainer" instance=ExtResource("2_ah3fn")]
+layout_mode = 2
+slot_number = 2
+
+[node name="HeroSlot3" parent="MarginContainer/VBoxContainer/Content/SlotsContainer" instance=ExtResource("2_ah3fn")]
+layout_mode = 2
+slot_number = 3
+
+[node name="ConfirmButton" type="Button" parent="MarginContainer/VBoxContainer/Content/SlotsContainer"]
+layout_mode = 2
+text = "Confirm
+"

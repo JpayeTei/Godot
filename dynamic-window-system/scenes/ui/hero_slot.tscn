@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://ycr711pko7nw"]
+
+[ext_resource type="Script" uid="uid://bf2su7ebypy4m" path="res://script/ui/hero_slot.gd" id="1_r0j6q"]
+
+[node name="HeroSlot" type="HBoxContainer"]
+offset_right = 235.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_r0j6q")
+
+[node name="HeroLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Hero 1: None"
+
+[node name="Portrait" type="TextureRect" parent="."]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PickButton" type="Button" parent="."]
+layout_mode = 2
+text = "pick"

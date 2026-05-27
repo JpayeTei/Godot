@@ -9,7 +9,7 @@ signal window_closed #same thing but closed
 
 func _ready() -> void:
 	close_button.pressed.connect(close_window)
-	#show()
+	#hide()
 
 #this is a public method to open the window
 #The manager calls this instead of directly calling show(), 
@@ -27,3 +27,4 @@ func close_window() -> void:
 func set_title(t: String) -> void:
 	title_label.text = t #@onready var title_label: Label = $MarginContainer/VBoxContainer/TitleBar/TitleLabel 
 	pass
+func _on_Close_

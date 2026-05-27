@@ -21,7 +21,9 @@ func register_window(id: String, scene: PackedScene) -> void: #scene ma chai sce
 #a new one and then shows it.
 #Returns the BaseWindow instance for convenience (so I can do extra setup, 
 #like setting a dynamic title).
-func open_window(id: String) -> BaseWindow:
+func open_window(id: String) -> BaseWindow: #id ko bhitra chai eg "hero_picker" jasto id janxa
+#remember function overlaoding is being used
+	
 	#Checks if a window with this ID is already in the open_windows dictionary 
 	#(meaning it’s been created and not closed).
 	if open_windows.has(id):
